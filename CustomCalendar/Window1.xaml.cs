@@ -56,36 +56,83 @@ namespace CustomCalendar
                 }
                 int daysCount = DateTime.DaysInMonth(dateTime.Value.Year, dateTime.Value.Month);
                 //int daysCount = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+                List<string> vs = new List<string> { "Пн", "Вт", "Ср","Чт", "Пт", "Сб", "Вс" };
                 for (int i = 0; i < 7; i++)
                 {
+
                     Button button = new Button
                     {
                         BorderThickness = new Thickness(0),
                         Background = Brushes.Transparent,
-                        Content = DateTime.Parse(DateTime.Parse(i + 1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("dddd")
+                        Content = vs[i]/* DateTime.Parse(DateTime.Parse(i + 1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("dddd")*/
                     };
 
-                    Grid.SetColumn(button, i);
-                    Grid.SetRow(button, 0);
-                    PART_WeekOfDay.Children.Add(button);
+                        Grid.SetColumn(button, i);
+                        Grid.SetRow(button, 0);
+                        PART_WeekOfDay.Children.Add(button);
+                     
+                   
                 }
 
                 int count = 0;
+                int start = 0;
+                int countd = 0;
+                if (DateTime.Parse(DateTime.Parse(1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("ddd")=="Пн")
+                {
+                    start = 1;
+                }
+                else if (DateTime.Parse(DateTime.Parse(1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("ddd")=="Вт")
+                {
+                    start = 2;
+                }
+               else if (DateTime.Parse(DateTime.Parse(1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("ddd")=="Ср")
+                {
+                    start = 3;
+                }
+                else if (DateTime.Parse(DateTime.Parse(1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("ddd")=="Чт")
+                {
+                    start = 4;
+                }else if (DateTime.Parse(DateTime.Parse(1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("ddd")=="Пт")
+                {
+                    start = 5;
+                }else if (DateTime.Parse(DateTime.Parse(1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("ddd")=="Сб")
+                {
+                    start = 6;
+                }
+                else if (DateTime.Parse(DateTime.Parse(1 + "." + dateTime.Value.ToString("MM.yyyy")).ToString()).ToString("ddd")=="Вс")
+                {
+                    start = 7;
+                }
                 for (int i = 0; i < 6; i++)
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        count++;
-
-                        if (count <= daysCount)
+                        count++;   
+                        if (countd <= daysCount)
                         {
-                            //Button button = new Button { Height=50, Content = DateTime.Parse(count + "." + DateTime.Now.ToString("MM.yyyy")).ToString("d MMM")  };
-                            UserControl1 button = new UserControl1 { HeightContent = 100, Content = DateTime.Parse(count + "." + dateTime.Value.ToString("MM.yyyy")).ToString("d MMM"), UCApps = DateTime.Parse(count + "." + dateTime.Value.ToString("MM.yyyy")).ToString("d MMM") };
-                            Grid.SetColumn(button, j);
-                            Grid.SetRow(button, i + 1);
-                            PART_Day.Children.Add(button);
-                        }
+                            if (count < start)
+                            {
+                                Button button = new Button { Content = "", Background = Brushes.Transparent, BorderThickness = new Thickness(0) };
+                                Grid.SetColumn(button, j);
+                                Grid.SetRow(button, i + 1);
+                                PART_Day.Children.Add(button);
+                            }
+                            else
+                            {
+                                countd++;
+                                if (countd <= daysCount)
+                                {
+                                    Button button = new Button { Content = countd };
+                                    Grid.SetColumn(button, j);
+                                    Grid.SetRow(button, i + 1);
+                                    PART_Day.Children.Add(button);
+                                }
+                            }
+                          
 
+                          
+                        }
+                        
                     }
                 }
             }
